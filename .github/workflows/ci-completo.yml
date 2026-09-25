@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm install
-      - run: npx eslint . --max-warnings 0
+      - run: npx eslint . --max-warnings 0 --no-error-on-unmatched-pattern
 
   pruebas:
     runs-on: ubuntu-latest
