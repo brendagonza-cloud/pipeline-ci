@@ -1,0 +1,11 @@
+{
+  "name": "pipeline-ci",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node -e \"console.log('Pruebas OK')\"",
+    "build": "mkdir -p dist && echo 'Build exitoso' > dist/resultado.txt"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
