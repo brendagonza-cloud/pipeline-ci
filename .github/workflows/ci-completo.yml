@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm install
-      - run: npm test -- --coverage
+      - run: npm test 
 
   empaquetar:
     needs: [calidad, pruebas]
