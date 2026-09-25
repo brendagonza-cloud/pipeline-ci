@@ -1,0 +1,44 @@
+name: CI completo
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore: [ 'docs/**' ]
+  pull_request:
+    branches: [ main ]
+    paths-ignore: [ 'docs/**' ]
+
+jobs:
+  calidad:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npx eslint . --max-warnings 0
+
+  pruebas:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm test -- --coverage
+
+  empaquetar:
+    needs: [calidad, pruebas]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-y-cobertura
+          path: |
+            dist/
+            coverage/
